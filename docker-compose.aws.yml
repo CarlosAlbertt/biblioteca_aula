@@ -1,0 +1,9 @@
+# AWS deployment: only the app container. The database is Amazon RDS.
+# .env on the EC2 must define DATABASE_URL (RDS endpoint, ?sslmode=require) and SECRET_KEY.
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:5000:5000"   # only reachable from the EC2 itself (SSH tunnel)
